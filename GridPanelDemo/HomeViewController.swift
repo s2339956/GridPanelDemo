@@ -59,7 +59,7 @@ class HomeViewController :UIViewController {
     
     func addFlipTapGestureRecognizerToView(view:UIView) {
         
-        var tap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "flipView:")
+        let tap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(HomeViewController.flipView(_:)))
         tap.numberOfTapsRequired = 1
         view.addGestureRecognizer(tap)
         
@@ -67,7 +67,7 @@ class HomeViewController :UIViewController {
     
     func makeGlobalConstraintsToView(view:UIView,subviewArray:Array<AnyObject>) {
         
-        var dic:NSDictionary = [
+        let dic:NSDictionary = [
             "view1":subviewArray[0],
             "view2":subviewArray[1],
             "view3":subviewArray[2],
@@ -76,31 +76,33 @@ class HomeViewController :UIViewController {
             "view6":subviewArray[5]
         ];
         self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[view5][view6(==view5)]|",
-                                                                        options: NSLayoutFormatOptions.AlignAllBaseline,
+                                                                        options:
+             NSLayoutFormatOptions(rawValue: 0),
                                                                         metrics: nil,
-                                                                          views: dic as [NSObject : AnyObject]))
+                                                                          views: dic as! [String : AnyObject] ))
         self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[view3][view4(==view3)]|",
-                                                                        options: NSLayoutFormatOptions.AlignAllBaseline,
+                                                                        options:  NSLayoutFormatOptions(rawValue: 0),
                                                                         metrics: nil,
-                                                                          views: dic as [NSObject : AnyObject]))
+                                                                          views: dic as! [String: AnyObject]))
         self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[view1][view2(==view1)]|",
-                                                                        options: NSLayoutFormatOptions.AlignAllBaseline,
+                                                                        options:  NSLayoutFormatOptions(rawValue: 0),
                                                                         metrics: nil,
-                                                                          views: dic as [NSObject : AnyObject]))
+                                                                          views: dic as! [String : AnyObject]))
         self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-22-[view1][view3(==view1)][view5(==view1)]|",
-                                                                        options: nil,
+                                                                        options: NSLayoutFormatOptions(rawValue: 0),
                                                                         metrics: nil,
-                                                                          views: dic as [NSObject : AnyObject]))
+                                                                          views: dic as! [String : AnyObject]))
         self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-22-[view2][view4(==view2)][view6(==view2)]|",
-                                                                        options: nil,
+            options: NSLayoutFormatOptions(rawValue: 0),
                                                                         metrics: nil,
-                                                                          views: dic as [NSObject : AnyObject]))
-        
-    }
-    
+                                                                          views: dic as! [String : AnyObject]))
+
+
+        }
+
     func flipView(sender:UITapGestureRecognizer) {
-        
-        var flipDuration = 0.8
+
+        let flipDuration = 0.8
         UIView.transitionWithView(sender.view!,
             duration: flipDuration,
             options: UIViewAnimationOptions.TransitionFlipFromLeft,
@@ -119,21 +121,24 @@ class HomeViewController :UIViewController {
     
     func imageViewWithImage(image:UIImage,title:String,inPanelView:UIView) {
         
-        var panelLogo       = UIImageView(image: image)
-        var label           = UILabel(frame: CGRectMake(0, 70, 75, 40))
+        let panelLogo       = UIImageView(image: image)
+        let label           = UILabel(frame: CGRectMake(0, 70, 75, 40))
         label.textColor     = UIColor.whiteColor();
         label.text          = title
         label.textAlignment = NSTextAlignment.Center
-        
-        panelLogo.setTranslatesAutoresizingMaskIntoConstraints(false)
+
+
+        panelLogo.translatesAutoresizingMaskIntoConstraints = false
+//        panelLogo.setTranslatesAutoresizingMaskIntoConstraints(false)
+
         panelLogo.addSubview(label)
         inPanelView.addSubview(panelLogo)
         inPanelView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-45-[panelLogo]-45-|",
-                                                                          options: NSLayoutFormatOptions.AlignAllBaseline,
+                                                                          options:  NSLayoutFormatOptions(rawValue: 0),
                                                                           metrics: nil,
                                                                             views: ["panelLogo":panelLogo]))
         inPanelView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-50-[panelLogo]-60-|",
-                                                                          options: NSLayoutFormatOptions.AlignAllBaseline,
+                                                                          options: NSLayoutFormatOptions(rawValue: 0),
                                                                           metrics: nil,
                                                                             views: ["panelLogo":panelLogo]))
         
